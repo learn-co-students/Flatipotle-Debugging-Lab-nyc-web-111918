@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import './App.css'
-import Form from './Form'
-import Order from './Order'
+import Form from './components/Form'
+import Order from './components/Order'
 
 class App extends Component {
-  state: {
-    orders: []
+  constructor(){
+    super()
+
+    this.state = {
+      orders: []
+    }
   }
 
   addOrder = (order) => {
@@ -14,23 +18,26 @@ class App extends Component {
     })
   }
 
-  render() {
-    const orders = this.state.orders.map( (order, idx) => {
-      <Order key={idx} {...order} />
+  renderOrders = () => {
+    return this.state.orders.map( (order, idx) => {
+      return <Order key={idx} {...order} />
     })
+  }
 
+  render() {
+    // console.log("App state: ", this.state);
     return (
       <div className="App">
         <header className="App-header">
           <img src={ require('./images/logo.png') } className="App-logo" alt="logo" />
         </header>
 
-        <Form />
+        <Form addOrder={this.addOrder}/>
 
         <div className="ui raised container segment">
           <h1 className="ui block header">All Orders</h1>
           <div className="ui three cards">
-            { orders }
+            { this.renderOrders() }
           </div>
         </div>
       </div>
