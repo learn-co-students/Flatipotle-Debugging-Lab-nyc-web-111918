@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Side from './Side'
 
 class Order extends Component {
   state = {
@@ -6,10 +7,14 @@ class Order extends Component {
   }
 
   handleClick = () => {
-    this.state.isClicked = !this.state.isClicked
+    // console.log('in handle click sides');
+    this.setState({
+      isClicked: !this.state.isClicked
+    })
   }
 
   render() {
+    console.log('order',this.state.isClicked);
     return (
       <div className="ui centered raised card">
         <div className="image">
@@ -28,15 +33,15 @@ class Order extends Component {
         </div>
         <div className="extra content">
           { this.props.sides.length > 0 ?
-              <button className="ui button small" onClick={ this.handleClick }>
+              <button className="ui button small" onClick={this.handleClick}>
                 View Sides
+                { /* this is just a shortcut to writing this.state.isClicked ? <Side sides={this.props.sides} /> : null */ }
+                { this.state.isClicked && <Side sides={this.props.sides} /> }
               </button>
             :
               <p>No sides</p>
           }
 
-          { /* this is just a shortcut to writing this.state.isClicked ? <Side sides={this.props.sides} /> : null */ }
-          { this.state.isClicked && <Side sides={this.props.sides} /> }
 
         </div>
       </div>

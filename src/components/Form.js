@@ -10,30 +10,33 @@ const DEFAULT_STATE = {
   toppings: [],
   sides: []
 }
-
 class Form extends Component {
   state = {
     ...DEFAULT_STATE
   }
 
-  handleSubmit() {
+  handleSubmit = (event) => {
+    // console.log('state', this.state, 'event:', event.target);
     event.preventDefault()
+    // debugger
     document.getElementById("order-form").reset()
     this.props.addOrder(this.state)
-
     this.setState({
       ...DEFAULT_STATE
-    })
+    }/*, () => console.log('form handleSubmit', this.state)*/)
   }
 
-  handleChange() {
+  handleChange = (event) => {
+    // console.log('hello');
+    // console.log(this.state);
+    // this is changing the state in this class.
     const itemType = event.target.name
     const item = event.target.value
-
+    // debugger
     !this.state[`${itemType}`].includes(item) ?
       this.setState({
         [itemType]: this.state[`${itemType}`].concat(item)
-      })
+      }/*, () => console.log(this.state)*/)
     :
       this.setState({
         [itemType]: this.state[`${itemType}`].filter(
@@ -42,29 +45,31 @@ class Form extends Component {
       })
   }
 
+// states are empty. setting state is not wroking?
   render() {
+    // console.log(this.state);
     return(
       <div className="ui raised container segment">
         <h1 className="ui block header">Order Form</h1>
-        <form className="ui form" id="order-form" onSubmit={ this.handleSubmit }>
+        <form className="ui form" id="order-form" onSubmit={this.handleSubmit}>
           <ProteinForm
             protein={ this.state.protein }
-            handleOnChange={ this.handleChange }
+            handleChange={ this.handleChange }
           />
 
           <FillingForm
             fillings={ this.state.fillings }
-            handleOnChange={ this.handleChange }
+            handleChange={ this.handleChange }
           />
 
           <ToppingForm
             toppings={ this.state.toppings }
-            handleOnChange={ this.handleChange }
+            handleChange={ this.handleChange }
           />
 
           <SideForm
             sides={ this.state.sides }
-            handleOnChange={ this.handleChange }
+            handleChange={ this.handleChange }
           />
 
           <br />
